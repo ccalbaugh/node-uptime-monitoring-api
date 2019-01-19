@@ -18,11 +18,15 @@ const server = http.createServer((req, res) => {
     buffer.concat(decoder.write(data));
   });
 
-  res.end("Hello World\n");
+  req.on("end", () => {
+    buffer.concat(decoder.end());
 
-  console.log(
-    `Request recieved with these headers: ${JSON.stringify(headers, null, 2)}`
-  );
+    res.end("Hello World\n");
+
+    console.log(
+      `Request recieved with these headers: ${JSON.stringify(headers, null, 2)}`
+    );
+  });
 });
 
 server.listen(3000, () => {
