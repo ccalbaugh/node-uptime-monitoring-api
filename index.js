@@ -1,5 +1,6 @@
 const http = require("http");
 const url = require("url");
+const StringDecoder = require("string_decoder").StringDecoder;
 
 const server = http.createServer((req, res) => {
   const { headers, url: requestUrl } = req;
@@ -9,6 +10,13 @@ const server = http.createServer((req, res) => {
   const trimmedPath = pathname.replace(/^\/+|\/+$/g, "");
 
   const method = req.method.toLowerCase();
+
+  const decoder = new StringDecoder("utf-8");
+  const buffer = "";
+
+  req.on("data", data => {
+    buffer.concat(decoder.write(data));
+  });
 
   res.end("Hello World\n");
 
