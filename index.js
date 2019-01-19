@@ -12,20 +12,18 @@ const server = http.createServer((req, res) => {
   const method = req.method.toLowerCase();
 
   const decoder = new StringDecoder("utf-8");
-  const buffer = "";
+  let buffer = "";
 
   req.on("data", data => {
-    buffer.concat(decoder.write(data));
+    buffer = buffer.concat(decoder.write(data));
   });
 
   req.on("end", () => {
-    buffer.concat(decoder.end());
+    buffer = buffer.concat(decoder.end());
 
     res.end("Hello World\n");
 
-    console.log(
-      `Request recieved with these headers: ${JSON.stringify(headers, null, 2)}`
-    );
+    console.log(`Request recieved with this payload: ${buffer}`);
   });
 });
 
