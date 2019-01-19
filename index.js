@@ -2,7 +2,8 @@ const http = require("http");
 const url = require("url");
 
 const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url, true);
+  const { headers, url: requestUrl } = req;
+  const parsedUrl = url.parse(requestUrl, true);
 
   const { pathname, query } = parsedUrl;
   const trimmedPath = pathname.replace(/^\/+|\/+$/g, "");
@@ -12,9 +13,7 @@ const server = http.createServer((req, res) => {
   res.end("Hello World\n");
 
   console.log(
-    `Request recieved on path: ${trimmedPath} with method: ${method} and with these query string parameters: ${JSON.stringify(
-      query
-    )}`
+    `Request recieved with these headers: ${JSON.stringify(headers, null, 2)}`
   );
 });
 
