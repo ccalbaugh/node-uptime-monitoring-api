@@ -52,7 +52,9 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(config.port, () => {
-  console.log(`The server is listening on port ${config.port} now`);
+  console.log(
+    `The server is listening on port ${config.port} in ${config.envName} mode`
+  );
 });
 
 const handlers = {};
