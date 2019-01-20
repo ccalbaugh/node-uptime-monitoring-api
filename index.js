@@ -21,9 +21,32 @@ const server = http.createServer((req, res) => {
   req.on("end", () => {
     buffer = buffer.concat(decoder.end());
 
-    res.end("Hello World\n");
+    const chosenHandler =
+      typeof router[trimmedPath] !== "undefined"
+        ? router[trimmedPath]
+        : handlers.notFound;
 
-    console.log(`Request recieved with this payload: ${buffer}`);
+    const data = {
+      trimmedPath,
+      query,
+      method,
+      headers,
+      payload: buffer
+    };
+
+    chosenHandler(data, (statusCode, payload) => {
+      statusCode = typeof statusCode == "number" ? statusCode : 200;
+
+      payload = typeof payload == "object" ? payload : {};
+
+      const payloadString = JSON.stringify(payload);
+
+      res.writeHead(statusCode);
+
+      res.end(payloadString);
+
+      console.log(`Returning this response: ${statusCode}, ${payloadString}`);
+    });
   });
 });
 
@@ -33,9 +56,13 @@ server.listen(3000, () => {
 
 const handlers = {};
 
-handlers.sample = (data, cb) => {};
+handlers.sample = (data, cb) => {
+  cb(406, { name: "sample handlers" });
+};
 
-handlers.notFound = (data, cb) => {};
+handlers.notFound = (data, cb) => {
+  cb(404);
+};
 
 const router = {
   sample: handlers.sample
