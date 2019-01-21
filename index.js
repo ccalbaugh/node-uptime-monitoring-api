@@ -76,8 +76,8 @@ const unifiedServer = (req, res) => {
 
 const handlers = {};
 
-handlers.sample = (data, cb) => {
-  cb(406, { name: "sample handlers" });
+handlers.ping = (data, cb) => {
+  cb(200);
 };
 
 handlers.notFound = (data, cb) => {
@@ -85,5 +85,5 @@ handlers.notFound = (data, cb) => {
 };
 
 const router = {
-  sample: handlers.sample
+  ping: handlers.ping
 };
