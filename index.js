@@ -3,8 +3,9 @@ const http = require("http");
 const https = require("https");
 const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
-const config = require("./config");
+const config = require("./lib/config");
 const handlers = require("./lib/handlers");
+const helpers = require("./lib/helpers");
 
 const httpServer = http.createServer((req, res) => {
   unifiedServer(req, res);
@@ -56,7 +57,7 @@ const unifiedServer = (req, res) => {
       query,
       method,
       headers,
-      payload: buffer
+      payload: helpers.parseJsonToObject(buffer)
     };
 
     chosenHandler(data, (statusCode, payload) => {
