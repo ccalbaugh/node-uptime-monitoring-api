@@ -4,6 +4,16 @@ const StringDecoder = require("string_decoder").StringDecoder;
 const config = require("./config");
 
 const server = http.createServer((req, res) => {
+  unifiedServer(req, res);
+});
+
+server.listen(config.port, () => {
+  console.log(
+    `The server is listening on port ${config.port} in ${config.envName} mode`
+  );
+});
+
+const unifiedServer = (req, res) => {
   const { headers, url: requestUrl } = req;
   const parsedUrl = url.parse(requestUrl, true);
 
@@ -49,13 +59,7 @@ const server = http.createServer((req, res) => {
       console.log(`Returning this response: ${statusCode}, ${payloadString}`);
     });
   });
-});
-
-server.listen(config.port, () => {
-  console.log(
-    `The server is listening on port ${config.port} in ${config.envName} mode`
-  );
-});
+};
 
 const handlers = {};
 
