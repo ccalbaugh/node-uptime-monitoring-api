@@ -4,6 +4,7 @@ const https = require("https");
 const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
 const config = require("./config");
+const handlers = require("./lib/handlers");
 
 const httpServer = http.createServer((req, res) => {
   unifiedServer(req, res);
@@ -74,16 +75,7 @@ const unifiedServer = (req, res) => {
   });
 };
 
-const handlers = {};
-
-handlers.ping = (data, cb) => {
-  cb(200);
-};
-
-handlers.notFound = (data, cb) => {
-  cb(404);
-};
-
 const router = {
-  ping: handlers.ping
+  ping: handlers.ping,
+  users: handlers.users
 };
