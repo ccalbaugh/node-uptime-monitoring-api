@@ -77,6 +77,7 @@ const unifiedServer = (req, res) => {
 };
 
 const router = {
+  checks: handlers.checks,
   ping: handlers.ping,
   users: handlers.users,
   tokens: handlers.tokens
