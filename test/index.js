@@ -5,6 +5,7 @@ _app = {};
 _app.tests = {};
 
 _app.tests.unit = require("./unit");
+_app.tests.api = require("./api");
 
 _app.countTests = () => {
   let counter = 0;
@@ -48,6 +49,8 @@ _app.produceTestReport = (limit, successes, errors) => {
 
   console.log("");
   console.log("---------------END TEST REPORT---------------");
+
+  process.exit(0);
 };
 
 _app.runTests = () => {
