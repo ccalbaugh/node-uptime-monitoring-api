@@ -1,3 +1,5 @@
+process.env.NODE_ENV = "testing";
+
 _app = {};
 
 _app.tests = {};
